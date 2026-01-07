@@ -35,5 +35,5 @@ struct AnswerRow: View {
 }
 
 #Preview {
-    AnswerRow(answer: Answer(text: "Text", isCorrect: true))
+    AnswerRow(answer: Answer(text: "Test", isCorrect: true))
 }
