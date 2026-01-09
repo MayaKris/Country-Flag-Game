@@ -30,13 +30,15 @@ struct QuestionView: View {
                 AnswerRow(answer: Answer(text: "Italy", isCorrect: true))
                 AnswerRow(answer: Answer(text: "England", isCorrect: false))
             }
+            CustomButton(text: "Next")
+            Spacer()
         }
-        .foregroundColor(.yellow)
+        .foregroundStyle(.yellow)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.cyan)
         .navigationBarBackButtonHidden(true)
-    }
-}
+            }
+        }
 
 #Preview {
     QuestionView()
