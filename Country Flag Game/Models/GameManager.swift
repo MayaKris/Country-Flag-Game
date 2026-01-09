@@ -23,11 +23,13 @@ class GameManager {
     }
     
     func reset() {
+        loadQuestions()
         questions = questions.shuffled()
         index = 0
         score = 0
         progress = 0.0
         playingGame = true
+        goToNextQuestion()
     }
     
     func loadQuestions() {
@@ -69,6 +71,16 @@ class GameManager {
             country = nextQuestion.correctAnswer.text
             answerChoices = ([nextQuestion.correctAnswer] + nextQuestion.incorrectAnswers).shuffled()
             index += 1
+        }
+        else {
+            playingGame = false
+        }
+    }
+    
+    func select(answer: Answer) {
+        answerSelected = true
+        if answer.isCorrect {
+            score += 1
         }
     }
 }
