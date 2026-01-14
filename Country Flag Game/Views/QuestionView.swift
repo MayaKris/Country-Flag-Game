@@ -8,30 +8,51 @@
 import SwiftUI
 
 struct QuestionView: View {
+    @Environment(GameManager.self) var gameManager
     var body: some View {
         VStack(spacing: 20) {
+            if gameManager.playingGame {
+                
+
             HStack {
                 Text("Country Flag Game")
                     .fontWeight(.heavy)
                     .padding()
                 Spacer()
-                Text("1 out of 3")
+                Text("\(gameManager.index) out of \(gameManager.questions.count)")
                     .padding()
             }
-            ProgressBar(progress: 50)
+                ProgressBar(progress: gameManager.progress)
             VStack(spacing: 10) {
                 Text("Which country's flag is this?")
                     .font(.title)
-                Image("Italy")
+                Image(gameManager.country)
                     .resizable()
                     .frame(width: 300, height: 200)
-                AnswerRow(answer: Answer(text: "France", isCorrect: false))
-                AnswerRow(answer: Answer(text: "Germany", isCorrect: false))
-                AnswerRow(answer: Answer(text: "Italy", isCorrect: true))
-                AnswerRow(answer: Answer(text: "England", isCorrect: false))
+                ForEach(gameManager.answerChoices) { answer in
+                    AnswerRow(answer: answer)
+                }
             }
-            CustomButton(text: "Next")
+                Button {
+                    gameManager.goToNextQuestion()
+                } label: {
+                    CustomButton(text: "Next", background: gameManager.answerSelected ? .yellow : .gray)
+                }
+                .disabled(!gameManager.answerSelected)
             Spacer()
+        }
+            else {
+                Text("Country Flag Game")
+                    .font(.title)
+                    .fontWeight(.heavy)
+                Text("Congratulations! You've completed the game!")
+                Text("You scored \(gameManager.score) out of \(gameManager.questions.count)")
+                Button {
+                    gameManager.reset()
+                } label: {
+                    CustomButton(text: "Play Again")
+                }
+            }
         }
         .foregroundStyle(.yellow)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
