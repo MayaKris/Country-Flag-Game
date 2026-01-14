@@ -77,7 +77,7 @@ class GameManager {
         }
     }
     
-    func select(answer: Answer) {
+    func selectAnswer(answer: Answer) {
         answerSelected = true
         if answer.isCorrect {
             score += 1
